@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yumey Fashions | Elegancia Sin Tiempo</title>
+    <meta name="description" content="Descubre la colección de alta costura de Yumey Fashions. Elegancia minimalista y artesanía moderna.">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Header -->
+    <header id="main-header">
+        <div class="container header-inner">
+            <button class="menu-toggle" id="menu-open"><i class="fa-solid fa-bars"></i></button>
+            
+            <nav class="nav-links">
+                <a href="#" data-link="home">Inicio</a>
+                <a href="#" data-link="catalog">Colecciones</a>
+                <a href="#" data-link="lookbook">Lookbook</a>
+                <a href="#" data-link="lookbook-editorial">Editorial</a>
+                <a href="#" data-link="elegancia-atemporal">Archive</a>
+            </nav>
+            
+            <div class="logo"><a href="#" data-link="home">Yumey</a></div>
+            
+            <div class="header-actions">
+                <a href="#" id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="#" data-link="auth" id="user-profile-btn"><i class="fa-regular fa-user"></i></a>
+                <a href="#" id="cart-trigger"><i class="fa-solid fa-bag-shopping"></i> <span id="cart-count">0</span></a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="cart-sidebar glass" id="mobile-menu">
+        <div class="cart-header">
+            <h2 class="cart-title">Menu</h2>
+            <button class="close-cart" id="menu-close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <nav style="display: flex; flex-direction: column; gap: 30px; font-family: var(--font-headline); font-size: 2rem;">
+            <a href="#" data-link="home">Inicio</a>
+            <a href="#" data-link="catalog">Colecciones</a>
+            <a href="#" data-link="lookbook">Lookbook</a>
+            <a href="#" data-link="lookbook-editorial">Editorial</a>
+            <a href="#" data-link="lookbook-ete">Été</a>
+            <a href="#" data-link="elegancia-atemporal">The Archive</a>
+            <a href="#" data-link="wishlist">Lista de Deseos</a>
+            <a href="#" data-link="auth">Mi Cuenta</a>
+        </nav>
+    </div>
+
+    <!-- Main Content Sections (SPA Style) -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="page-section active">
+            <div class="hero">
+                <div class="container">
+                    <div class="hero-content glass">
+                        <span style="text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.75rem; margin-bottom: 20px; display: block;">Colección 2024</span>
+                        <h1>Editorial Intimacy</h1>
+                        <p>Una fusión de elegancia atemporal y fluidez digital moderna. Diseñado para la mujer que valora la sofisticación y la artesanía.</p>
+                        <div style="display: flex; gap: 20px;">
+                            <a href="#" data-link="catalog" class="btn">Explorar</a>
+                            <a href="#" data-link="lookbook" class="btn btn-outline">Ver Lookbook</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Preview Collections -->
+            <section class="container section-gap">
+                <h2 style="font-size: 3rem; text-align: center; margin-bottom: 60px;">Piezas Icónicas</h2>
+                <div class="product-grid" id="home-featured-products">
+                    <!-- Loaded via JS -->
+                </div>
+            </section>
+        </section>
+
+        <!-- Catalog Section -->
+        <section id="catalog" class="page-section container section-gap">
+            <div class="catalog-grid">
+                <aside class="filters">
+                    <h3>Catálogo</h3>
+                    <div class="filter-group">
+                        <label>Categoría</label>
+                        <ul class="filter-options" id="category-filter">
+                            <li class="active" data-category="all">Todos</li>
+                            <li data-category="vestidos">Vestidos</li>
+                            <li data-category="tops">Tops</li>
+                            <li data-category="accesorios">Accesorios</li>
+                            <li data-category="calzado">Calzado</li>
+                        </ul>
+                    </div>
+                    <div class="filter-group">
+                        <label>Precio</label>
+                        <ul class="filter-options">
+                            <li>Menos de 200 €</li>
+                            <li>200 € - 500 €</li>
+                            <li>Más de 500 €</li>
+                        </ul>
+                    </div>
+                </aside>
+                
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                        <p id="product-count">Mostrando 0 productos</p>
+                        <select style="padding: 10px; border: 1px solid var(--color-outline); border-radius: 4px;">
+                            <option>Relevancia</option>
+                            <option>Precio: Menor a Mayor</option>
+                            <option>Precio: Mayor a Menor</option>
+                        </select>
+                    </div>
+                    <div class="product-grid" id="catalog-products">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Detail Section -->
+        <section id="product-detail" class="page-section container">
+            <div class="product-detail-grid" id="detail-container">
+                <!-- Loaded via JS -->
+            </div>
+        </section>
+
+        <!-- Lookbook Section -->
+        <section id="lookbook" class="page-section">
+            <div class="lookbook-section">
+                <div class="container">
+                    <h2 style="font-size: 4rem; text-align: center;">Seasonal Lookbook</h2>
+                    <p style="text-align: center; color: var(--color-outline); max-width: 600px; margin: 20px auto 40px;">Una narrativa visual de elegancia y propósito.</p>
+
+                    <!-- Sub-lookbook nav -->
+                    <div style="display:flex;gap:16px;justify-content:center;margin-bottom:60px;flex-wrap:wrap;">
+                        <a href="#" data-link="lookbook-editorial" class="btn btn-outline" style="padding:12px 28px;">Editorial Colección 2024</a>
+                        <a href="#" data-link="lookbook-ete" class="btn btn-outline" style="padding:12px 28px;">Lookbook Été</a>
+                        <a href="#" data-link="elegancia-atemporal" class="btn btn-outline" style="padding:12px 28px;">Elegancia Atemporal</a>
+                    </div>
+
+                    <div class="lookbook-editorial">
+                        <div class="editorial-item">
+                            <img src="assets/hero.png" alt="Editorial 1">
+                            <div class="editorial-content">
+                                <h3>La Esencia</h3>
+                                <p>Seda orgánica y cortes asimétricos.</p>
+                                <a href="#" data-link="lookbook-editorial" class="btn" style="margin-top: 24px;">Ver Editorial</a>
+                            </div>
+                        </div>
+                        <div class="editorial-item">
+                            <img src="assets/dress.png" alt="Editorial 2">
+                            <div class="editorial-content">
+                                <h3>Été — Verano</h3>
+                                <p>Moda consciente nacida de la Riviera.</p>
+                                <a href="#" data-link="lookbook-ete" class="btn" style="margin-top: 24px;">Ver Lookbook</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auth Section -->
+        <section id="auth" class="page-section auth-section">
+            <div class="auth-card glass">
+                <h2>Bienvenida</h2>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="tu@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Contraseña</label>
+                    <input type="password" placeholder="********">
+                </div>
+                <button class="btn" style="width: 100%; margin-top: 20px;" id="login-btn">Entrar</button>
+                <p style="text-align: center; margin-top: 24px; font-size: 0.875rem;">¿No tienes cuenta? <a href="#" style="color: var(--color-secondary); font-weight: 600;">Regístrate</a></p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="page-section container section-gap">
+            <div style="display: grid; grid-template-columns: 300px 1fr; gap: 80px;">
+                <aside>
+                    <h2 class="editorial-text" style="font-size: 3rem; margin-bottom: 40px;">Mi Perfil</h2>
+                    <ul class="filter-options">
+                        <li class="active">Mis Pedidos</li>
+                        <li>Direcciones</li>
+                        <li>Métodos de Pago</li>
+                        <li>Lista de Deseos</li>
+                        <li id="logout-btn">Cerrar Sesión</li>
+                    </ul>
+                </aside>
+                <div id="profile-content">
+                    <div class="glass" style="padding: 40px; border-radius: var(--radius-lg);">
+                        <h3>Historial de Pedidos</h3>
+                        <p style="color: var(--color-outline); margin-top: 20px;">No has realizado ningún pedido todavía.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Checkout Section -->
+        <section id="checkout" class="page-section container section-gap">
+            <h2 style="font-size: 3rem; margin-bottom: 60px;">Finalizar Pedido</h2>
+            <div style="display: grid; grid-template-columns: 1fr 400px; gap: 80px;">
+                <div class="glass" style="padding: 40px; border-radius: var(--radius-lg);">
+                    <div class="form-group">
+                        <label>Dirección de Envío</label>
+                        <input type="text" placeholder="Calle, Número, Piso">
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div class="form-group">
+                            <label>Ciudad</label>
+                            <input type="text" placeholder="Madrid">
+                        </div>
+                        <div class="form-group">
+                            <label>Código Postal</label>
+                            <input type="text" placeholder="28001">
+                        </div>
+                    </div>
+                    <h3 style="margin: 40px 0 20px;">Pago</h3>
+                    <div class="form-group">
+                        <label>Tarjeta de Crédito</label>
+                        <input type="text" placeholder="0000 0000 0000 0000">
+                    </div>
+                    <button class="btn" style="width: 100%; margin-top: 40px;" id="complete-order-btn">Pagar Ahora</button>
+                </div>
+                <div id="checkout-summary">
+                    <!-- Loaded via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar glass" id="cart-sidebar">
+        <div class="cart-header">
+            <h2 class="cart-title">Tu Bolsa</h2>
+            <button class="close-cart" id="cart-close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <!-- Loaded via JS -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal</span>
+                <span id="cart-total-value">0 €</span>
+            </div>
+            <button class="btn" style="width: 100%;" id="checkout-btn">Finalizar Pedido</button>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREEN: Lookbook Editorial (Capítulos)    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="lookbook-editorial" class="page-section">
+      <div class="lb-editorial-hero" style="height:70vh;background:url('assets/hero.png') center/cover no-repeat;display:flex;align-items:flex-end;">
+        <div class="container" style="padding-bottom:80px;">
+          <span style="font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;color:#fff;opacity:.7;">Colección 2024</span>
+          <h1 style="font-family:var(--font-headline);font-size:5rem;color:#fff;line-height:1;margin-top:8px;">Lookbook Editorial</h1>
+        </div>
+      </div>
+
+      <div class="container" style="padding:80px 0;">
+        <p style="max-width:700px;font-size:1.25rem;line-height:2;color:var(--color-outline);margin-bottom:80px;">La pureza del diseño se encuentra con la delicadeza de los materiales en una narrativa visual de elegancia sin esfuerzo. Creemos en la belleza del vacío.</p>
+
+        <!-- Capítulo I -->
+        <div class="lb-chapter">
+          <div class="lb-chapter-label">Capítulo I</div>
+          <h2 class="lb-chapter-title">La Fluidez</h2>
+          <div class="lb-chapter-grid">
+            <div class="lb-feature-card">
+              <div class="lb-img-wrap"><img src="assets/dress.png" alt="Abrigo Estructurado"></div>
+              <div class="lb-card-info">
+                <span class="lb-material">Lana &amp; Seda</span>
+                <h3>Abrigo Estructurado de Seda</h3>
+                <p class="lb-caption">El arte reside en el hilo.</p>
+                <button class="btn" data-id="2" data-action="add">Añadir a Bolsa</button>
+              </div>
+            </div>
+            <div class="lb-quote-block">
+              <blockquote>"Cada prenda es un estudio en proporciones, una escultura suave diseñada para interactuar con la luz."</blockquote>
+            </div>
+          </div>
+        </div>
+
+        <!-- Capítulo II -->
+        <div class="lb-chapter" style="margin-top:120px;">
+          <div class="lb-chapter-label">Capítulo II</div>
+          <h2 class="lb-chapter-title">Detalles Eternos</h2>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:60px;">
+            <div class="lb-item-card">
+              <div class="lb-img-wrap lb-img-tall"><img src="assets/dress.png" alt="Blusa Arquitectónica"></div>
+              <span class="lb-material">Lino Orgánico</span>
+              <h3>Blusa Arquitectónica</h3>
+              <button class="btn btn-outline" style="margin-top:12px;width:100%;padding:12px;" data-id="4" data-action="add">Añadir</button>
+            </div>
+            <div class="lb-item-card">
+              <div class="lb-img-wrap lb-img-tall"><img src="assets/shoes.png" alt="Colgante Silueta"></div>
+              <span class="lb-material">Oro Rosa 18k</span>
+              <h3>Colgante 'Silueta'</h3>
+              <button class="btn btn-outline" style="margin-top:12px;width:100%;padding:12px;" data-id="5" data-action="add">Añadir</button>
+            </div>
+            <div class="lb-item-card">
+              <div class="lb-img-wrap lb-img-tall"><img src="assets/handbag.png" alt="Vestido Caída Libre"></div>
+              <span class="lb-material">Crepé de China</span>
+              <h3>Vestido Caída Libre</h3>
+              <button class="btn btn-outline" style="margin-top:12px;width:100%;padding:12px;" data-id="2" data-action="add">Añadir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREEN: Lookbook Été (Colección de Verano) -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="lookbook-ete" class="page-section">
+      <div style="background:var(--color-on-surface);color:#fff;padding:120px 0;">
+        <div class="container">
+          <span style="font-size:.75rem;letter-spacing:.3em;text-transform:uppercase;opacity:.5;">Lookbook Exclusivo</span>
+          <h1 style="font-family:var(--font-headline);font-size:6rem;line-height:1;margin:16px 0 40px;">Été</h1>
+          <p style="max-width:600px;font-size:1.125rem;opacity:.7;line-height:1.9;">Nacida de las tranquilas mañanas en la Riviera y el suave toque de la brisa marina. Un homenaje a la luz natural, capturada en sedas crudas, linos finos y algodones etéreos.</p>
+          <button style="margin-top:40px;background:none;border:0;color:#fff;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.4);padding-bottom:4px;">Leer la historia completa →</button>
+        </div>
+      </div>
+
+      <div class="container" style="padding:80px 0;">
+        <!-- Look 01 -->
+        <div class="ete-look" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:120px;">
+          <div>
+            <span class="lb-chapter-label">Look 01</span>
+            <div class="lb-img-wrap" style="height:700px;margin-top:24px;"><img src="assets/dress.png" alt="Look 01" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);"></div>
+          </div>
+          <div>
+            <h2 style="font-family:var(--font-headline);font-size:3.5rem;margin-bottom:16px;">Vestido Plisado Marfil</h2>
+            <p style="font-size:1.125rem;color:var(--color-outline);margin-bottom:8px;">€ 450</p>
+            <p style="color:var(--color-outline);line-height:1.9;margin-bottom:40px;">Seda plisada de origen sostenible. Corte empire, tirantes ajustables. Disponible en marfil y stone.</p>
+            <button class="btn" data-id="2" data-action="add">Añadir a Bolsa — 450 €</button>
+          </div>
+        </div>
+        <!-- Look 02 -->
+        <div class="ete-look" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+          <div>
+            <h2 style="font-family:var(--font-headline);font-size:3.5rem;margin-bottom:16px;">Blusa Seda Asimétrica</h2>
+            <p style="font-size:1.125rem;color:var(--color-outline);margin-bottom:8px;">€ 220</p>
+            <p style="color:var(--color-outline);line-height:1.9;margin-bottom:40px;">Detalle de lazo en el hombro, caída envolvente. 100% seda de mulberry.</p>
+            <button class="btn" data-id="4" data-action="add">Añadir a Bolsa — 220 €</button>
+          </div>
+          <div>
+            <span class="lb-chapter-label">Look 02</span>
+            <div class="lb-img-wrap" style="height:700px;margin-top:24px;"><img src="assets/hero.png" alt="Look 02" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREEN: Elegancia Atemporal (The Archive)  -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="elegancia-atemporal" class="page-section">
+      <div class="container" style="padding:140px 0 80px;">
+        <div style="display:flex;gap:80px;margin-bottom:120px;align-items:flex-end;">
+          <div style="flex:1;">
+            <span style="font-size:.75rem;text-transform:uppercase;letter-spacing:.3em;color:var(--color-outline);">The Archive</span>
+            <h1 style="font-family:var(--font-headline);font-size:6rem;line-height:1;margin-top:16px;">Elegancia Atemporal</h1>
+          </div>
+          <p style="flex:1;font-size:1.125rem;color:var(--color-outline);line-height:1.9;">Donde la artesanía milenaria se encuentra con la silueta moderna. Una colección que respira quietud, lujo táctil y una devoción absoluta por el detalle.</p>
+        </div>
+
+        <!-- I. Sombras de Marfil -->
+        <div style="border-top:1px solid var(--color-outline);padding-top:60px;margin-bottom:80px;">
+          <div style="display:grid;grid-template-columns:300px 1fr;gap:60px;align-items:start;">
+            <div>
+              <h2 style="font-family:var(--font-headline);font-size:2rem;margin-bottom:12px;">I. Sombras de Marfil</h2>
+              <p style="color:var(--color-outline);font-size:.875rem;line-height:1.9;">La dualidad de la luz. Estructuras firmes que se rinden ante la fluidez de la seda cruda.</p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;">
+              <div class="product-card">
+                <div class="product-image"><img src="assets/handbag.png" alt="Abrigo de Lana"></div>
+                <div class="product-info">
+                  <span class="lb-material">Lana virgen &amp; seda</span>
+                  <h3 class="product-name">Abrigo Estructurado de Lana</h3>
+                  <p class="product-price">1.800 €</p>
+                  <button class="btn" style="width:100%;margin-top:12px;" data-id="1" data-action="add">Añadir</button>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image"><img src="assets/dress.png" alt="Vestido Plisado"></div>
+                <div class="product-info">
+                  <span class="lb-material">Crepé plisado</span>
+                  <h3 class="product-name">Vestido Plisado</h3>
+                  <p class="product-price">950 €</p>
+                  <button class="btn" style="width:100%;margin-top:12px;" data-id="2" data-action="add">Añadir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- II. La Seda y el Viento -->
+        <div style="border-top:1px solid var(--color-outline);padding-top:60px;background:var(--color-on-surface);color:#fff;padding:80px;border-radius:var(--radius-lg);">
+          <h2 style="font-family:var(--font-headline);font-size:3rem;margin-bottom:24px;">II. La Seda y el Viento</h2>
+          <blockquote style="font-size:1.5rem;font-style:italic;opacity:.7;max-width:700px;line-height:1.8;margin-bottom:40px;">"Buscamos capturar lo intangible. La forma en que la tela se mueve un instante antes de volver a la quietud."</blockquote>
+          <p style="opacity:.5;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;">Diseño atemporal para la vida moderna. Artesanía, detalle y una estética inconfundible.</p>
+          <p style="opacity:.3;font-size:.75rem;margin-top:40px;">© 2024 Yumey Fashions. Crafted for Discerning Taste.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREEN: Wishlist / Lista de Deseos         -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section id="wishlist" class="page-section container section-gap">
+      <h2 style="font-family:var(--font-headline);font-size:3rem;margin-bottom:60px;">Lista de Deseos</h2>
+      <div class="product-grid" id="wishlist-grid">
+        <div style="grid-column:1/-1;text-align:center;padding:80px 0;color:var(--color-outline);">
+          <i class="fa-regular fa-heart" style="font-size:3rem;display:block;margin-bottom:20px;"></i>
+          <p>Aún no has guardado ninguna pieza.</p>
+          <a href="#" data-link="catalog" class="btn" style="margin-top:30px;display:inline-block;">Explorar Colección</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SCREEN: Size Guide Modal                   -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div id="size-guide-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,.5);align-items:center;justify-content:center;">
+      <div class="glass" style="max-width:700px;width:90%;padding:60px;border-radius:var(--radius-lg);position:relative;">
+        <button id="size-guide-close" style="position:absolute;top:24px;right:24px;font-size:1.5rem;background:none;border:none;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+        <h2 style="font-family:var(--font-headline);font-size:2.5rem;margin-bottom:40px;">Guía de Tallas</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:.875rem;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--color-outline);">
+              <th style="padding:12px;text-align:left;font-weight:600;text-transform:uppercase;font-size:.7rem;letter-spacing:.1em;">Talla</th>
+              <th style="padding:12px;text-align:center;">Pecho (cm)</th>
+              <th style="padding:12px;text-align:center;">Cintura (cm)</th>
+              <th style="padding:12px;text-align:center;">Cadera (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--color-surface-variant);"><td style="padding:14px;">XS</td><td style="padding:14px;text-align:center;">80–84</td><td style="padding:14px;text-align:center;">60–64</td><td style="padding:14px;text-align:center;">87–90</td></tr>
+            <tr style="border-bottom:1px solid var(--color-surface-variant);"><td style="padding:14px;">S</td><td style="padding:14px;text-align:center;">84–88</td><td style="padding:14px;text-align:center;">64–68</td><td style="padding:14px;text-align:center;">90–94</td></tr>
+            <tr style="border-bottom:1px solid var(--color-surface-variant);"><td style="padding:14px;">M</td><td style="padding:14px;text-align:center;">88–92</td><td style="padding:14px;text-align:center;">68–72</td><td style="padding:14px;text-align:center;">94–98</td></tr>
+            <tr style="border-bottom:1px solid var(--color-surface-variant);"><td style="padding:14px;">L</td><td style="padding:14px;text-align:center;">92–96</td><td style="padding:14px;text-align:center;">72–76</td><td style="padding:14px;text-align:center;">98–102</td></tr>
+            <tr><td style="padding:14px;">XL</td><td style="padding:14px;text-align:center;">96–100</td><td style="padding:14px;text-align:center;">76–80</td><td style="padding:14px;text-align:center;">102–106</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top:30px;font-size:.75rem;color:var(--color-outline);">Si estás entre dos tallas, te recomendamos la talla mayor para una silueta más fluida.</p>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Nav Bar -->
+    <nav id="mobile-bottom-nav" style="display:none;position:fixed;bottom:0;left:0;width:100%;z-index:1500;height:70px;align-items:center;justify-content:space-around;border-top:1px solid var(--color-surface-variant);">
+      <a href="#" data-link="home" class="mob-nav-item" style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;"><i class="fa-solid fa-house" style="font-size:1.25rem;"></i>Inicio</a>
+      <a href="#" data-link="catalog" class="mob-nav-item" style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;"><i class="fa-solid fa-table-cells-large" style="font-size:1.25rem;"></i>Cat.</a>
+      <a href="#" data-link="wishlist" class="mob-nav-item" style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;"><i class="fa-regular fa-heart" style="font-size:1.25rem;"></i>Deseos</a>
+      <a href="#" data-link="profile" class="mob-nav-item" style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;"><i class="fa-regular fa-user" style="font-size:1.25rem;"></i>Perfil</a>
+    </nav>
+
+    <!-- Footer -->
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="color: #fff; margin-bottom: 24px;">Yumey</div>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.875rem; max-width: 300px;">Definiendo la moda de lujo con una perspectiva moderna y artesanal. Cada pieza es una declaración de intenciones.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Colecciones</h4>
+                    <ul class="footer-links">
+                        <li><a href="#" data-link="catalog">Vestidos</a></li>
+                        <li><a href="#" data-link="catalog">Tops</a></li>
+                        <li><a href="#" data-link="catalog">Accesorios</a></li>
+                        <li><a href="#" data-link="catalog">Ver Todo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Servicio</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Ayuda y FAQ</a></li>
+                        <li><a href="#">Envíos</a></li>
+                        <li><a href="#">Devoluciones</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Síguenos</h4>
+                    <div style="display: flex; gap: 20px; font-size: 1.25rem;">
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Yumey Fashions. Hecho con ❤️ en Madrid.</p>
+                <div style="display: flex; gap: 30px;">
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
