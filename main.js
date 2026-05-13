@@ -101,12 +101,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (id === 'catalog') renderCatalog();
         if (id === 'wishlist') renderWishlist();
         if (id === 'checkout') renderCheckoutSummary();
+        if (id === 'lookbook-ete') window.scrollTo({top:0});
+        if (id === 'lookbook-editorial') window.scrollTo({top:0});
+        if (id === 'elegancia-atemporal') window.scrollTo({top:0});
 
         // Close overlays
         cartSidebar.classList.remove('open');
         mobileMenu.classList.remove('open');
         closeSizeGuide();
+
+        // Update active state in mobile bottom nav
+        document.querySelectorAll('.mob-nav-item').forEach(item => {
+            item.classList.toggle('active', item.getAttribute('data-link') === id);
+        });
     }
+
 
     // Attach all [data-link] anchors (including those injected later via JS)
     document.addEventListener('click', e => {
@@ -131,6 +140,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // ─── OVERLAYS ────────────────────────────────
+    document.getElementById('cart-trigger')?.addEventListener('click', e => {
+        e.preventDefault();
+        cartSidebar.classList.add('open');
+    });
+    document.getElementById('cart-close')?.addEventListener('click', () => {
+        cartSidebar.classList.remove('open');
+    });
+    document.getElementById('menu-open')?.addEventListener('click', () => {
+        mobileMenu.classList.add('open');
+    });
+    document.getElementById('menu-close')?.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+    });
+
     // ─── TOAST ────────────────────────────────────
     function showToast(msg, type = 'success') {
         toast.textContent = msg;
@@ -144,7 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const c = document.getElementById('home-featured-products');
         if (!c) return;
         c.innerHTML = '';
-        products.slice(0, 3).forEach(p => c.appendChild(createCard(p)));
+        // Show 4 products on home instead of 3 for a better grid
+        products.slice(0, 4).forEach(p => c.appendChild(createCard(p)));
     }
 
     // ─── RENDER CATALOG ───────────────────────────
@@ -161,33 +186,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // ─── PRODUCT CARD FACTORY ─────────────────────
     function createCard(p) {
         const div = document.createElement('div');
-        div.className = 'product-card';
+        div.className = 'product-card img-reveal';
         const wishlisted = wishlist.some(w => w.id === p.id);
         const filterStyle = p.filter ? `filter:${p.filter};` : '';
-        const accentColor = p.accent || 'var(--color-secondary)';
         div.innerHTML = `
             <div class="product-image" style="cursor:pointer;">
-                <img src="${p.img}" alt="${p.name}" loading="lazy" style="${filterStyle}transition:filter .4s ease,transform 1s ease;">
-                <div class="product-actions">
-                    <button class="btn" style="padding:12px 24px;" data-id="${p.id}" data-action="add">+ Bolsa</button>
-                </div>
+                <img src="${p.img}" alt="${p.name}" loading="lazy" style="${filterStyle}">
             </div>
             <div class="product-info">
-                <span style="font-size:.7rem;color:var(--color-outline);text-transform:uppercase;letter-spacing:.1em;">${p.category}</span>
-                <h3 class="product-name">${p.name}</h3>
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
-                    <p class="product-price" style="color:${accentColor};">${p.price.toLocaleString('es-ES')} €</p>
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                    <div>
+                        <h3 class="product-name">${p.name}</h3>
+                        <p class="product-price">${p.price.toLocaleString('es-ES')} €</p>
+                    </div>
                     <button class="wishlist-btn" data-id="${p.id}" title="Lista de deseos"
-                        style="background:none;border:none;cursor:pointer;font-size:1.25rem;color:${wishlisted ? accentColor : 'var(--color-outline)'};">
+                        style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:${wishlisted ? 'var(--color-secondary)' : 'var(--color-outline)'};">
                         <i class="fa-${wishlisted ? 'solid' : 'regular'} fa-heart"></i>
                     </button>
                 </div>
             </div>
         `;
-        div.querySelector('.product-image').addEventListener('click', e => {
-            if (!e.target.closest('.product-actions')) showProductDetail(p.id);
+        div.querySelector('.product-image').addEventListener('click', () => showProductDetail(p.id));
+        div.querySelector('.wishlist-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleWishlist(p, div);
         });
-        div.querySelector('.wishlist-btn').addEventListener('click', () => toggleWishlist(p, div));
         return div;
     }
 
@@ -198,19 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!p || !box) return;
         navigateTo('product-detail');
         box.innerHTML = `
-            <div class="detail-image">
+            <div class="detail-image img-reveal">
                 <img src="${p.img}" alt="${p.name}">
             </div>
             <div class="detail-content">
-                <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:.2em;color:var(--color-outline);">${p.category}</span>
-                <h1 style="margin-top:8px;">${p.name}</h1>
-                <p class="detail-price">${p.price.toLocaleString('es-ES')} €</p>
-                <p class="detail-description">${p.description}</p>
+                <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:0.3em;color:var(--color-outline);display:block;margin-bottom:12px;">${p.category}</span>
+                <h1 style="margin-bottom:16px; font-weight:300;">${p.name}</h1>
+                <p class="detail-price" style="font-family:var(--font-body); font-size:1.5rem; color:var(--color-on-surface); opacity:0.8; margin-bottom:32px;">${p.price.toLocaleString('es-ES')} €</p>
+                <p class="detail-description" style="line-height:2; margin-bottom:48px;">${p.description}</p>
 
                 <div class="size-selector">
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-                        <p style="margin:0;">Seleccionar Talla</p>
-                        <button id="open-size-guide" style="background:none;border:none;font-size:.75rem;text-decoration:underline;cursor:pointer;color:var(--color-outline);">Guía de tallas</button>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                        <p style="margin:0; font-size:0.7rem; text-transform:uppercase; letter-spacing:0.1em; font-weight:600;">Seleccionar Talla</p>
+                        <button id="open-size-guide" style="background:none;border:none;font-size:.65rem;text-transform:uppercase;letter-spacing:0.1em;cursor:pointer;color:var(--color-outline);">Guía de tallas</button>
                     </div>
                     <div class="size-options">
                         <button class="size-btn">XS</button>
@@ -221,25 +244,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
 
-                <div style="display:flex;gap:16px;margin-top:40px;">
+                <div style="display:flex;gap:16px;margin-top:48px;">
                     <button class="btn" id="detail-add-cart" style="flex:1;" data-id="${p.id}" data-action="add">Añadir a la Bolsa</button>
-                    <button class="btn btn-outline wishlist-btn" data-id="${p.id}" style="width:60px;font-size:1.1rem;">
+                    <button class="btn btn-outline wishlist-btn" data-id="${p.id}" style="width:64px; border-color:rgba(0,0,0,0.1);">
                         <i class="fa-${wishlist.some(w=>w.id===p.id)?'solid':'regular'} fa-heart"></i>
                     </button>
                 </div>
 
-                <div style="margin-top:60px;border-top:1px solid var(--color-surface-variant);padding-top:30px;">
-                    <details style="margin-bottom:20px;">
-                        <summary style="font-weight:600;cursor:pointer;text-transform:uppercase;font-size:.75rem;letter-spacing:.1em;list-style:none;display:flex;justify-content:space-between;">
+                <div style="margin-top:80px;border-top:1px solid rgba(0,0,0,0.05);padding-top:40px;">
+                    <details style="margin-bottom:24px;">
+                        <summary style="font-weight:600;cursor:pointer;text-transform:uppercase;font-size:.65rem;letter-spacing:.2em;list-style:none;display:flex;justify-content:space-between;opacity:0.6;">
                             Composición y Cuidados <span>+</span>
                         </summary>
-                        <p style="padding:15px 0;font-size:.875rem;color:var(--color-outline);">100% Seda natural. Lavado en seco únicamente. Fabricado artesanalmente en España.</p>
+                        <p style="padding:20px 0;font-size:.875rem;color:var(--color-outline);line-height:1.8;">100% Seda natural de Mulberry. Lavado en seco únicamente. Fabricado artesanalmente en nuestros talleres de Madrid.</p>
                     </details>
                     <details>
-                        <summary style="font-weight:600;cursor:pointer;text-transform:uppercase;font-size:.75rem;letter-spacing:.1em;list-style:none;display:flex;justify-content:space-between;">
+                        <summary style="font-weight:600;cursor:pointer;text-transform:uppercase;font-size:.65rem;letter-spacing:.2em;list-style:none;display:flex;justify-content:space-between;opacity:0.6;">
                             Envío y Devoluciones <span>+</span>
                         </summary>
-                        <p style="padding:15px 0;font-size:.875rem;color:var(--color-outline);">Envío gratuito en pedidos superiores a 500 €. Devoluciones gratuitas en 14 días.</p>
+                        <p style="padding:20px 0;font-size:.875rem;color:var(--color-outline);line-height:1.8;">Envío express gratuito en todos los pedidos. Devoluciones de cortesía dentro de los 14 días siguientes a la entrega.</p>
                     </details>
                 </div>
             </div>
